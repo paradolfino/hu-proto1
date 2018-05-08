@@ -44,7 +44,9 @@ class RoomsController < ApplicationController
   end
 
   def update
-    if @room.update(room_params)
+    new_params = room_params
+    new_params = room_params.merge(active: true) if is_ready_room
+    if @room.update(new_params)
       flash[:notice] = "Saved..."
       redirect_to listing_room_path(@room)
       
@@ -73,5 +75,9 @@ class RoomsController < ApplicationController
         :is_tv, :is_kitchen, 
         :is_air, :is_heating, 
         :is_internet, :price, :active)
+    end
+    
+    def is_ready_room
+      !@room.active && !@room.price.blank? && !@room.listing_name.blank? && !@room.photos.blank? && !@room.address.blank?
     end
 end
