@@ -5,7 +5,7 @@ class ReservationsController < ApplicationController
         room = Room.find(params[:room_id])
         
         if current_user == room.user
-            flash[:notice] = "Cannot book your own room!"
+            flash[:alert] = "Cannot book your own room!"
         else
             
             start_date = Date.parse(reservation_params[:start_date])
