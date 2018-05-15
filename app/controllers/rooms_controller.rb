@@ -70,7 +70,8 @@ class RoomsController < ApplicationController
   end
   
   def preview
-    start_date = Date.parse(params["start_date"])
+    @room = Room.find(params[:id])
+    start_date = Date.parse(params[:start_date])
     end_date = Date.parse(params[:end_date])
     output = {
       conflict: is_conflict(start_date, end_date, @room)
